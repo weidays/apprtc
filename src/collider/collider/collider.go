@@ -65,7 +65,7 @@ func (c *Collider) Run(p int, useTls bool) {
 		}
 		server := &http.Server{ Addr: pstr, Handler: nil, TLSConfig: config }
 
-		e = server.ListenAndServeTLS("/cert/cert.pem", "/cert/key.pem")
+		e = server.ListenAndServeTLS("/data/cert/apprtc.52buddha.com.pem", "/data/cert/apprtc.52buddha.com.key")
 	} else {
 		e = http.ListenAndServe(pstr, nil)
 	}
