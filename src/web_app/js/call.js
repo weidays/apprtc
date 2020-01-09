@@ -480,7 +480,7 @@ Call.prototype.createPcClient_ = function() {
 Call.prototype.startSignaling_ = function() {
   trace('Starting signaling.');
   if (this.isInitiator() && this.oncallerstarted) {
-    this.oncallerstarted(this.params_.roomId, this.params_.roomLink);
+    this.oncallerstarted(this.params_.roomId, this.params_.roomLink,this.params_.clientId);
   }
 
   this.startTime = window.performance.now();

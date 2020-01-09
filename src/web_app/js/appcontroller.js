@@ -254,7 +254,7 @@ AppController.prototype.hangup_ = function() {
 };
 
 AppController.prototype.onRemoteHangup_ = function() {
-  this.displayStatus_('The remote side hung up.');
+  this.displayStatus_('对方已挂断.');
   this.transitionToWaiting_();
 
   this.call_.onRemoteHangup();
@@ -436,18 +436,18 @@ AppController.prototype.onKeyPress_ = function(event) {
   }
 };
 
-AppController.prototype.pushCallNavigation_ = function(roomId, roomLink) {
+AppController.prototype.pushCallNavigation_ = function(roomId, roomLink,clientId) {
   if (!isChromeApp()) {
-    window.history.pushState({'roomId': roomId, 'roomLink': roomLink}, roomId,
+    window.history.pushState({'roomId': roomId, 'roomLink': roomLink, 'clientId': clientId}, roomId,
         roomLink);
   }
 };
 
-AppController.prototype.displaySharingInfo_ = function(roomId, roomLink) {
+AppController.prototype.displaySharingInfo_ = function(roomId, roomLink,clientId) {
   this.roomLinkHref_.href = roomLink;
   this.roomLinkHref_.text = roomLink;
   this.roomLink_ = roomLink;
-  this.pushCallNavigation_(roomId, roomLink);
+  this.pushCallNavigation_(roomId, roomLink,clientId);
   this.activate_(this.sharingDiv_);
 };
 
