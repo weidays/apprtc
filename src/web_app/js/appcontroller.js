@@ -54,6 +54,7 @@ var UI_CONSTANTS = {
 var AppController = function(loadingParams) {
   trace('Initializing; server= ' + loadingParams.roomServer + '.');
   trace('Initializing; room=' + loadingParams.roomId + '.');
+  trace('Initializing; client=' + loadingParams.clientId + '.');
 
   this.hangupSvg_ = $(UI_CONSTANTS.hangupSvg);
   this.icons_ = $(UI_CONSTANTS.icons);
@@ -125,9 +126,9 @@ var AppController = function(loadingParams) {
         this.hide_(confirmJoinDiv);
 
         // Record this room in the recently used list.
-        var recentlyUsedList = new RoomSelection.RecentlyUsedList();
-        recentlyUsedList.pushRecentRoom(this.loadingParams_.roomId);
-        this.finishCallSetup_(this.loadingParams_.roomId);
+        // var recentlyUsedList = new RoomSelection.RecentlyUsedList();
+        // recentlyUsedList.pushRecentRoom(this.loadingParams_.roomId);
+        this.finishCallSetup_(this.loadingParams_.roomId,this.loadingParams_.clientId);
       }.bind(this);
 
       if (this.loadingParams_.bypassJoinConfirmation) {
@@ -211,8 +212,8 @@ AppController.prototype.setupUi_ = function() {
   setUpFullScreen();
 };
 
-AppController.prototype.finishCallSetup_ = function(roomId) {
-  this.call_.start(roomId);
+AppController.prototype.finishCallSetup_ = function(roomId,clientId) {
+  this.call_.start(roomId,clientId);
   this.setupUi_();
 
   if (!isChromeApp()) {

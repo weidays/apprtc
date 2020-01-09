@@ -18,8 +18,8 @@
 // echo back the candidate. Answer is ignored because we should never receive
 // one while in loopback. Bye is ignored because there is no work to do.
 var loopbackWebSocket = null;
-var LOOPBACK_CLIENT_ID = 'loopback_client_id';
-function setupLoopback(wssUrl, roomId) {
+// var LOOPBACK_CLIENT_ID = 'loopback_client_id';
+function setupLoopback(wssUrl, roomId,clientId) {
   if (loopbackWebSocket) {
     loopbackWebSocket.close();
   }
@@ -41,7 +41,7 @@ function setupLoopback(wssUrl, roomId) {
     var registerMessage = {
       cmd: 'register',
       roomid: roomId,
-      clientid: LOOPBACK_CLIENT_ID
+      clientid: clientId
     };
     loopbackWebSocket.send(JSON.stringify(registerMessage));
   };

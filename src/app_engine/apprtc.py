@@ -371,8 +371,9 @@ def add_client_to_room(request, room_id, client_id, is_loopback):
       error = constants.RESPONSE_ROOM_FULL
       break
     if room.has_client(client_id):
-      error = constants.RESPONSE_DUPLICATE_CLIENT
-      break
+      remove_client_from_room(request.host_url, room_id, client_id)
+      # error = constants.RESPONSE_DUPLICATE_CLIENT
+      # break
 
     if occupancy == 0:
       is_initiator = True
@@ -519,8 +520,9 @@ class JoinPage(webapp2.RequestHandler):
     params = get_room_parameters(self.request, room_id, client_id, is_initiator)
     self.write_response('SUCCESS', params, messages)
 
-  def post(self, room_id):
-    client_id = generate_random(8)
+  def post(self, room_id,client_id):
+    # client_id = generate_random(8)
+
     is_loopback = self.request.get('debug') == 'loopback'
     result = add_client_to_room(self.request, room_id, client_id, is_loopback)
     if result['error'] is not None:
@@ -555,7 +557,7 @@ class RoomPage(webapp2.RequestHandler):
     content = template.render(params)
     self.response.out.write(content)
 
-  def get(self, room_id):
+  def get(self, room_id,client_id):
     """Renders index.html or full.html."""
     checkIfRedirect(self)
     # Check if room is full.
@@ -568,7 +570,7 @@ class RoomPage(webapp2.RequestHandler):
         self.write_response('full_template.html')
         return
     # Parse out room parameters from request.
-    params = get_room_parameters(self.request, room_id, None, None)
+    params = get_room_parameters(self.request, room_id, client_id, None)
     # room_id/room_link will be included in the returned parameters
     # so the client will launch the requested room.
     self.write_response('index_template.html', params)
@@ -596,9 +598,9 @@ app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/a/', analytics_page.AnalyticsPage),
     ('/compute/(\w+)/(\S+)/(\S+)', compute_page.ComputePage),
-    ('/join/([a-zA-Z0-9-_]+)', JoinPage),
+    ('/join/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)', JoinPage),
     ('/leave/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)', LeavePage),
     ('/message/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)', MessagePage),
     ('/params', ParamsPage),
-    ('/r/([a-zA-Z0-9-_]+)', RoomPage),
+    ('/r/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)', RoomPage),
 ], debug=True)

@@ -62,8 +62,10 @@
   </div>
 
   <div id="confirm-join-div" class="hidden">
-    <div>Ready to join<span id="confirm-join-room-span"></span>?</div>
-    <button id="confirm-join-button">JOIN</button>
+<!--    <div>Ready to join<span id="confirm-join-room-span"></span>?</div>-->
+<!--    <button id="confirm-join-button">JOIN</button>-->
+    <div>准备好和大师进行连线了吗？</div>
+    <button id="confirm-join-button">立即加入</button>
   </div>
 
   <footer>
@@ -136,6 +138,7 @@
       warningMessages: {{ warning_messages }},
 {% if room_id %}
       roomId: '{{ room_id }}',
+      clientId: '{{ client_id }}',
       roomLink: '{{ room_link }}',
 {% endif %}
       mediaConstraints: {{ media_constraints | safe }},

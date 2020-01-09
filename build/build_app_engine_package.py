@@ -103,7 +103,7 @@ def CopyApprtcSource(src_path, dest_path):
               os.makedirs(dest_js_path)
           shutil.copy(os.path.join(dirpath, name), dest_js_path)
 
-  build_version_info_file(os.path.join(dest_path, 'version_info.json'))
+  # build_version_info_file(os.path.join(dest_path, 'version_info.json'))
 
 
 def main():

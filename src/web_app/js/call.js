@@ -54,8 +54,8 @@ Call.prototype.isInitiator = function() {
   return this.params_.isInitiator;
 };
 
-Call.prototype.start = function(roomId) {
-  this.connectToRoom_(roomId);
+Call.prototype.start = function(roomId,clientId) {
+  this.connectToRoom_(roomId,clientId);
   if (this.params_.isLoopback) {
     setupLoopback(this.params_.wssUrl, roomId);
   }
@@ -107,7 +107,7 @@ Call.prototype.restart = function() {
   // Reinitialize the promises so the media gets hooked up as a result
   // of calling maybeGetMedia_.
   this.requestMediaAndIceServers_();
-  this.start(this.params_.previousRoomId);
+  this.start(this.params_.previousRoomId,this.params_.previousClientId,);
 };
 
 Call.prototype.hangup = function(async) {
@@ -177,6 +177,7 @@ Call.prototype.hangup = function(async) {
   steps.push({
     step: function() {
       this.params_.previousRoomId = this.params_.roomId;
+      this.params_.previousClientId = this.params_.clientId;
       this.params_.roomId = null;
       this.params_.clientId = null;
     }.bind(this),
@@ -282,8 +283,9 @@ Call.prototype.toggleAudioMute = function() {
 // tasks is complete, the signaling process begins. At the same time, a
 // WebSocket connection is opened using |wss_url| followed by a subsequent
 // registration once GAE registration completes.
-Call.prototype.connectToRoom_ = function(roomId) {
+Call.prototype.connectToRoom_ = function(roomId,clientId) {
   this.params_.roomId = roomId;
+  this.params_.clientId = clientId;
   // Asynchronously open a WebSocket connection to WSS.
   // TODO(jiayl): We don't need to wait for the signaling channel to open before
   // start signaling.
@@ -427,8 +429,9 @@ Call.prototype.onUserMediaSuccess_ = function(stream) {
 };
 
 Call.prototype.onUserMediaError_ = function(error) {
-  var errorMessage = 'Failed to get access to local media. Error name was ' +
-      error.name + '. Continuing without sending a stream.';
+  // var errorMessage = 'Failed to get access to local media. Error name was ' +
+  //     error.name + '. Continuing without sending a stream.';
+  var errorMessage = '无法获取设备摄像头，请换个设备再试';
   this.onError_('getUserMedia error: ' + errorMessage);
   this.errorMessageQueue_.push(error);
   alert(errorMessage);
@@ -506,8 +509,11 @@ Call.prototype.joinRoom_ = function() {
     if (!this.params_.roomId) {
       reject(Error('Missing room id.'));
     }
+    if (!this.params_.clientId) {
+      reject(Error('Missing client id.'));
+    }
     var path = this.roomServer_ + '/join/' +
-        this.params_.roomId + window.location.search;
+        this.params_.roomId+ '/' + this.params_.clientId + window.location.search;
 
     sendAsyncUrlRequest('POST', path).then(function(response) {
       var responseObj = parseJSON(response);
@@ -521,9 +527,9 @@ Call.prototype.joinRoom_ = function() {
         // When room is full, responseObj.result === 'FULL'
         reject(Error('Registration error: ' + responseObj.result));
         if (responseObj.result === 'FULL') {
-          var getPath = this.roomServer_ + '/r/' +
-              this.params_.roomId + window.location.search;
-          window.location.assign(getPath);
+          // var getPath = this.roomServer_ + '/r/' +
+          //     this.params_.roomId + window.location.search;
+          // window.location.assign(getPath);
         }
         return;
       }
