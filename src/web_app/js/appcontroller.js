@@ -114,11 +114,11 @@ var AppController = function(loadingParams) {
       this.createCall_();
 
       // Ask the user to confirm.
-      if (!RoomSelection.matchRandomRoomPattern(this.loadingParams_.roomId)) {
-        // Show the room name only if it does not match the random room pattern.
-        $(UI_CONSTANTS.confirmJoinRoomSpan).textContent = ' "' +
-            this.loadingParams_.roomId + '"';
-      }
+      // if (!RoomSelection.matchRandomRoomPattern(this.loadingParams_.roomId)) {
+      //   // Show the room name only if it does not match the random room pattern.
+      //   $(UI_CONSTANTS.confirmJoinRoomSpan).textContent = ' "' +
+      //       this.loadingParams_.roomId + '"';
+      // }
       var confirmJoinDiv = $(UI_CONSTANTS.confirmJoinDiv);
       this.show_(confirmJoinDiv);
 
