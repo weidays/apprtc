@@ -131,7 +131,6 @@ def get_wss_parameters(request):
     # if that fails, use fallback value.
     memcache_client = memcache.Client()
     wss_active_host = memcache_client.get(constants.WSS_HOST_ACTIVE_HOST_KEY)
-    logging.warning('wss_active_host:'+wss_active_host+'constants.WSS_HOST_PORT_PAIRS'+constants.WSS_HOST_PORT_PAIRS)
     if wss_active_host in constants.WSS_HOST_PORT_PAIRS:
       wss_host_port_pair = wss_active_host
     else:
