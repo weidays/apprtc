@@ -53,13 +53,16 @@
 </head>
 <body>
 
-  <div>Sorry, this room is full.</div>
-  <button>OPEN A NEW ROOM</button>
+  <div>对不起，这不是你的连线</div>
+  <button>关闭页面</button>
 
 
   <script>
     document.querySelector("button").onclick = function() {
-      location.href = location.origin;
+      // location.href = location.origin;
+      window.opener=null;
+      window.open('','_self');
+      window.close();
     };
   </script>
 

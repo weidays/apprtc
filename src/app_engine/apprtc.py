@@ -566,9 +566,10 @@ class RoomPage(webapp2.RequestHandler):
     if room is not None:
       logging.info('Room ' + room_id + ' has state ' + str(room))
       if room.get_occupancy() >= 2:
-        logging.info('Room ' + room_id + ' is full')
-        self.write_response('full_template.html')
-        return
+        if not room.has_client(client_id):
+            logging.info('Room ' + room_id + ' is full')
+            self.write_response('full_template.html')
+            return
     # Parse out room parameters from request.
     params = get_room_parameters(self.request, room_id, client_id, None)
     # room_id/room_link will be included in the returned parameters
