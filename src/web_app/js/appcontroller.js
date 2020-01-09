@@ -438,8 +438,8 @@ AppController.prototype.onKeyPress_ = function(event) {
 
 AppController.prototype.pushCallNavigation_ = function(roomId, roomLink,clientId) {
   if (!isChromeApp()) {
-    window.history.pushState({'roomId': roomId, 'roomLink': roomLink, 'clientId': clientId}, roomId,
-        roomLink);
+    // window.history.pushState({'roomId': roomId, 'roomLink': roomLink, 'clientId': clientId}, roomId,
+    //     roomLink);
   }
 };
 
