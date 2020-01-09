@@ -107,7 +107,7 @@ Call.prototype.restart = function() {
   // Reinitialize the promises so the media gets hooked up as a result
   // of calling maybeGetMedia_.
   this.requestMediaAndIceServers_();
-  this.start(this.params_.previousRoomId,this.params_.previousClientId,);
+  this.start(this.params_.previousRoomId,this.params_.previousClientId);
 };
 
 Call.prototype.hangup = function(async) {
