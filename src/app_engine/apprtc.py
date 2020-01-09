@@ -567,7 +567,7 @@ class RoomPage(webapp2.RequestHandler):
       logging.info('Room ' + room_id + ' has state ' + str(room))
       if room.get_occupancy() >= 2:
         if not room.has_client(client_id):
-            logging.info('Room ' + room_id + ' is full')
+            logging.info('Client ' + client_id + ' is not in Room ' + room_id + ', and Room is full')
             self.write_response('full_template.html')
             return
     # Parse out room parameters from request.

@@ -1,7 +1,7 @@
 {
   "name": "apprtc",
   "version": "1.0.0",
-  "description": "Project checking for AppRTC repo",
+  "description": "Project checking for 大师连线 repo",
   "license": "BSD-3-Clause",
   "main": "Gruntfile.js",
   "repository": {

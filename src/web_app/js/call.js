@@ -405,7 +405,7 @@ Call.prototype.maybeGetIceServers_ = function() {
           if (this.onstatusmessage) {
             // Error retrieving ICE servers.
             var subject =
-                encodeURIComponent('AppRTC demo ICE servers not working');
+                encodeURIComponent('大师连线 demo ICE servers not working');
             this.onstatusmessage(
                 'No TURN server; unlikely that media will traverse networks. ' +
                 'If this persists please ' +
